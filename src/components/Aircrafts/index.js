@@ -1,3 +1,4 @@
+// FIXME - refactor to re-usable component
 import React from "react";
 import PropTypes from "prop-types";
 import { List, Divider } from "@material-ui/core";
@@ -6,7 +7,12 @@ import Aircraft from "./Aircraft";
 const Aircrafts = ({ aircrafts, select, selected }) => (
   <List>
     {aircrafts.map((aircraft) => (
-      <Aircraft key={aircraft.ident} aircraft={aircraft} selected={selected} handleClick={select} />
+      <Aircraft
+        key={aircraft.ident}
+        aircraft={aircraft}
+        selected={selected}
+        handleClick={select}
+      />
     ))}
     <Divider />
   </List>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import { getFlights, getAircrafts } from "../api";
 import Aircrafts from "./Aircrafts";
+import Flights from "./Flights";
 
 function App() {
   const [aircrafts, setAircrafts] = useState([]);
@@ -9,6 +10,9 @@ function App() {
 
   const [selectedAircraft, setSelectedAircraft] = useState("");
   const [selectedFlights, setSelectedFlights] = useState([]);
+
+  const selectFlight = (flightId) =>
+    setSelectedFlights([...selectedFlights, flightId]);
 
   useEffect(() => {
     setAircrafts(getAircrafts());
@@ -21,6 +25,11 @@ function App() {
         aircrafts={aircrafts}
         select={setSelectedAircraft}
         selected={selectedAircraft}
+      />
+      <Flights
+        flights={flights}
+        select={selectFlight}
+        selected={selectedFlights}
       />
     </div>
   );
