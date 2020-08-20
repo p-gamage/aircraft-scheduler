@@ -6,7 +6,7 @@ import Aircraft from "./Aircraft";
 const Aircrafts = ({ aircrafts, select, selected }) => (
   <List>
     {aircrafts.map((aircraft) => (
-      <Aircraft aircraft={aircraft} selected={selected} handleClick={select} />
+      <Aircraft key={aircraft.ident} aircraft={aircraft} selected={selected} handleClick={select} />
     ))}
     <Divider />
   </List>
@@ -16,6 +16,6 @@ export default Aircrafts;
 
 Aircrafts.propTypes = {
   aircrafts: PropTypes.array.isRequired,
-  handleClick: PropTypes.func.isRequired,
+  select: PropTypes.func.isRequired,
   selected: PropTypes.string.isRequired,
 };
