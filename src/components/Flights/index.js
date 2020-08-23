@@ -1,16 +1,23 @@
 // FIXME - refactor to re-usable component
 import React from "react";
 import PropTypes from "prop-types";
-import { List, Divider } from "@material-ui/core";
+import { List } from "@material-ui/core";
 import Flight from "./Flight";
 
-const Flights = ({ flights, select, selected }) => (
+const Flights = ({ flights, select, selected, rotation }) => (
   <List>
     {flights.map((flight) => (
-      <div key={flight.ident}>
-        <Flight flight={flight} selected={selected} handleClick={select} />
-        <Divider />
-      </div>
+      <Flight
+        key={flight.ident}
+        flight={flight}
+        selected={rotation && selected.includes(flight)}
+        handleClick={select}
+        disabled={
+          rotation &&
+          selected.length > 0 &&
+          selected[selected.length - 1].ident !== flight.ident
+        }
+      />
     ))}
   </List>
 );
@@ -21,4 +28,5 @@ Flights.propTypes = {
   flights: PropTypes.array.isRequired,
   select: PropTypes.func.isRequired,
   selected: PropTypes.array.isRequired,
+  rotation: PropTypes.bool,
 };

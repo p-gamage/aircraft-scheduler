@@ -14,14 +14,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Flight = ({ flight, selected, handleClick }) => {
+const Flight = ({ flight, selected, handleClick, disabled }) => {
   const classes = useStyles();
 
   return (
     <ListItem
       button
-      selected={selected.includes(flight)}
+      selected={selected}
       onClick={() => handleClick(flight)}
+      divider
+      disabled={disabled}
     >
       <ListItemText
         primary={flight.origin}
@@ -50,6 +52,7 @@ export default Flight;
 
 Flight.propTypes = {
   flight: PropTypes.object.isRequired,
-  selected: PropTypes.array.isRequired,
   handleClick: PropTypes.func.isRequired,
+  selected: PropTypes.bool,
+  disabled: PropTypes.bool,
 };

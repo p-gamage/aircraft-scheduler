@@ -7,6 +7,7 @@ const Aircraft = ({ aircraft, selected, handleClick }) => (
     button
     selected={selected === aircraft.ident}
     onClick={() => handleClick(aircraft.ident)}
+    divider
   >
     <ListItemText primary={aircraft.ident} />
   </ListItem>

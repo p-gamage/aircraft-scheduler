@@ -4,8 +4,8 @@ import { getFlights, getAircrafts } from "../api";
 import Aircrafts from "./Aircrafts";
 import Flights from "./Flights";
 import { Grid } from "@material-ui/core";
-
-const layoverTimeSeconds = 20 * 60;
+import sortFlightsByTime from "../lib/sortFlightsByTime";
+import updateFlights from "../lib/updateFlights";
 
 function App() {
   const [aircrafts, setAircrafts] = useState([]);
@@ -13,17 +13,61 @@ function App() {
 
   const [selectedAircraft, setSelectedAircraft] = useState("");
   const [selectedFlights, setSelectedFlights] = useState([]);
-
-  const [rotation, setRotation] = useState([]);
+  const [removedFlights, setRemovedFlights] = useState({});
+  const [availableFlights, setAvailableFlights] = useState({});
 
   const selectFlight = (flight) => {
-    selectedFlights.includes(flight)
-      ? setSelectedFlights(
-          selectedFlights.filter(
-            (selectedFlight) => selectedFlight.ident !== flight.ident
-          )
+    if (selectedFlights.includes(flight)) {
+      setSelectedFlights(
+        selectedFlights.filter(
+          (selectedFlight) => selectedFlight.ident !== flight.ident
         )
-      : setSelectedFlights([...selectedFlights, flight]);
+      );
+
+      let sortedFlights;
+
+      if (selectedFlights.length < 2) {
+        sortedFlights = sortFlightsByTime([
+          ...availableFlights[flight.ident],
+          ...removedFlights[flight.ident],
+        ]);
+      } else {
+        sortedFlights = sortFlightsByTime([
+          ...availableFlights[
+            selectedFlights[selectedFlights.length - 2].ident
+          ],
+        ]);
+      }
+
+      setFlights(sortedFlights);
+    } else {
+      setSelectedFlights([...selectedFlights, flight]);
+
+      let flightsToAdd = [];
+
+      if (selectedFlights.length > 0) {
+        flightsToAdd =
+          removedFlights[selectedFlights[selectedFlights.length - 1].ident];
+      }
+
+      const updatedFlights = updateFlights(
+        [...flights, ...flightsToAdd],
+        flight
+      );
+      console.log("updatedFlights", updatedFlights);
+
+      setFlights(sortFlightsByTime(updatedFlights.available));
+
+      setAvailableFlights({
+        ...availableFlights,
+        [flight.ident]: updatedFlights.available,
+      });
+
+      setRemovedFlights({
+        ...removedFlights,
+        [flight.ident]: updatedFlights.removed,
+      });
+    }
   };
 
   useEffect(() => {
@@ -31,25 +75,9 @@ function App() {
   }, []);
 
   useEffect(() => {
-    selectedAircraft && setFlights(sortFlightsByTime(getFlights()));
+    const sortedFlights = sortFlightsByTime(getFlights());
+    selectedAircraft && setFlights(sortedFlights);
   }, [selectedAircraft]);
-
-  const sortFlightsByTime = (flights) =>
-    flights
-      .sort((a, b) => a.arrivaltime - b.arrivaltime)
-      .sort((a, b) => a.departuretime - b.departuretime);
-
-  // const removeOtherAirports = (flightId) => flights.filter(flight => flight.origin === )
-
-  useEffect(() => {
-    const createRotation = () =>
-      selectedFlights.map((selectedFlight) =>
-        flights.find((flight) => flight.ident === selectedFlight.ident)
-      );
-
-    const rotation = createRotation();
-    setRotation(rotation);
-  }, [flights, selectedFlights]);
 
   return (
     <div className="App">
@@ -63,9 +91,10 @@ function App() {
         </Grid>
         <Grid item xs={6}>
           <Flights
-            flights={rotation}
+            flights={selectedFlights}
             select={selectFlight}
             selected={selectedFlights}
+            rotation
           />
         </Grid>
         <Grid item xs={4}>
