@@ -1,16 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ListItem, ListItemText } from "@material-ui/core";
+import { ListItem, ListItemText, Paper } from "@material-ui/core";
 
 const Aircraft = ({ aircraft, selected, handleClick }) => (
-  <ListItem
-    button
-    selected={selected === aircraft.ident}
-    onClick={() => handleClick(aircraft.ident)}
-    divider
-  >
-    <ListItemText primary={aircraft.ident} />
-  </ListItem>
+  <Paper variant="outlined">
+    <ListItem
+      button
+      selected={selected === aircraft.ident}
+      onClick={() => handleClick(aircraft.ident)}
+      divider
+    >
+      <ListItemText primary={aircraft.ident} style={{ textAlign: "center" }} />
+    </ListItem>
+  </Paper>
 );
 
 export default Aircraft;

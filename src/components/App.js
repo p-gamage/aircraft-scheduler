@@ -3,9 +3,10 @@ import "./App.css";
 import { getFlights, getAircrafts } from "../api";
 import Aircrafts from "./Aircrafts";
 import Flights from "./Flights";
-import { Grid } from "@material-ui/core";
+import { Grid, Divider } from "@material-ui/core";
 import sortFlightsByTime from "../lib/sortFlightsByTime";
 import updateFlights from "../lib/updateFlights";
+import { Alert, AlertTitle } from "@material-ui/lab";
 
 function App() {
   const [aircrafts, setAircrafts] = useState([]);
@@ -54,7 +55,6 @@ function App() {
         [...flights, ...flightsToAdd],
         flight
       );
-      console.log("updatedFlights", updatedFlights);
 
       setFlights(sortFlightsByTime(updatedFlights.available));
 
@@ -79,8 +79,41 @@ function App() {
     selectedAircraft && setFlights(sortedFlights);
   }, [selectedAircraft]);
 
+  const selectFlightMessage = (
+    <Grid container justify="center" spacing={3} alignContent="center">
+      <Grid item xs={6}>
+        <Alert severity="info">
+          <AlertTitle style={{ textAlign: "left" }}>Select aircraft</AlertTitle>
+          Please select the aircraft from the left to see the flights
+        </Alert>
+      </Grid>
+    </Grid>
+  );
+
+  const rotationAndFlights = (
+    <>
+      <Grid item xs={6}>
+        <Flights
+          flights={selectedFlights}
+          select={selectFlight}
+          selected={selectedFlights}
+          rotation
+          selectedAircraft={selectedAircraft}
+        />
+      </Grid>
+      <Divider orientation="vertical" flexItem />
+      <Grid item xs>
+        <Flights
+          flights={flights}
+          select={selectFlight}
+          selected={selectedFlights}
+        />
+      </Grid>
+    </>
+  );
+
   return (
-    <div className="App">
+    <div className="App" style={{ margin: "1rem" }}>
       <Grid container spacing={2}>
         <Grid item xs={2}>
           <Aircrafts
@@ -89,21 +122,8 @@ function App() {
             selected={selectedAircraft}
           />
         </Grid>
-        <Grid item xs={6}>
-          <Flights
-            flights={selectedFlights}
-            select={selectFlight}
-            selected={selectedFlights}
-            rotation
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <Flights
-            flights={flights}
-            select={selectFlight}
-            selected={selectedFlights}
-          />
-        </Grid>
+        <Divider orientation="vertical" flexItem />
+        {selectedAircraft ? rotationAndFlights : selectFlightMessage}
       </Grid>
     </div>
   );
