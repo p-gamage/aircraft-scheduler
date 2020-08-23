@@ -5,6 +5,8 @@ import Aircrafts from "./Aircrafts";
 import Flights from "./Flights";
 import { Grid } from "@material-ui/core";
 
+const layoverTimeSeconds = 20 * 60;
+
 function App() {
   const [aircrafts, setAircrafts] = useState([]);
   const [flights, setFlights] = useState([]);
@@ -14,12 +16,14 @@ function App() {
 
   const [rotation, setRotation] = useState([]);
 
-  const selectFlight = (id) => {
-    selectedFlights.includes(id)
+  const selectFlight = (flight) => {
+    selectedFlights.includes(flight)
       ? setSelectedFlights(
-          selectedFlights.filter((selectedId) => selectedId !== id)
+          selectedFlights.filter(
+            (selectedFlight) => selectedFlight.ident !== flight.ident
+          )
         )
-      : setSelectedFlights([...selectedFlights, id]);
+      : setSelectedFlights([...selectedFlights, flight]);
   };
 
   useEffect(() => {
@@ -27,13 +31,20 @@ function App() {
   }, []);
 
   useEffect(() => {
-    selectedAircraft && setFlights(getFlights());
+    selectedAircraft && setFlights(sortFlightsByTime(getFlights()));
   }, [selectedAircraft]);
+
+  const sortFlightsByTime = (flights) =>
+    flights
+      .sort((a, b) => a.arrivaltime - b.arrivaltime)
+      .sort((a, b) => a.departuretime - b.departuretime);
+
+  // const removeOtherAirports = (flightId) => flights.filter(flight => flight.origin === )
 
   useEffect(() => {
     const createRotation = () =>
-      selectedFlights.map((id) =>
-        flights.find((flight) => flight.ident === id)
+      selectedFlights.map((selectedFlight) =>
+        flights.find((flight) => flight.ident === selectedFlight.ident)
       );
 
     const rotation = createRotation();

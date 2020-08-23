@@ -15,14 +15,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Flight = ({ flight, selected, handleClick }) => {
-  // console.log("flight", flight);
   const classes = useStyles();
 
   return (
     <ListItem
       button
-      selected={selected.includes(flight.ident)}
-      onClick={() => handleClick(flight.ident)}
+      selected={selected.includes(flight)}
+      onClick={() => handleClick(flight)}
     >
       <ListItemText
         primary={flight.origin}
