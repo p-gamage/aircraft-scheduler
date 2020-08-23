@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Flight = ({ flight, selected, handleClick }) => {
+  // console.log("flight", flight);
   const classes = useStyles();
 
   return (
@@ -29,7 +30,7 @@ const Flight = ({ flight, selected, handleClick }) => {
         inset
       />
       <Typography
-        style={{ marginRight: "38%", marginBottom: "20%" }}
+        style={{ marginRight: "35%", marginBottom: "20%" }}
         component="h3"
         color="primary"
       >

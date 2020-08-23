@@ -7,14 +7,15 @@ import Aircraft from "./Aircraft";
 const Aircrafts = ({ aircrafts, select, selected }) => (
   <List>
     {aircrafts.map((aircraft) => (
-      <Aircraft
-        key={aircraft.ident}
-        aircraft={aircraft}
-        selected={selected}
-        handleClick={select}
-      />
+      <div key={aircraft.ident}>
+        <Aircraft
+          aircraft={aircraft}
+          selected={selected}
+          handleClick={select}
+        />
+        <Divider />
+      </div>
     ))}
-    <Divider />
   </List>
 );
 

@@ -7,14 +7,11 @@ import Flight from "./Flight";
 const Flights = ({ flights, select, selected }) => (
   <List>
     {flights.map((flight) => (
-      <Flight
-        key={flight.ident}
-        flight={flight}
-        selected={selected}
-        handleClick={select}
-      />
+      <div key={flight.ident}>
+        <Flight flight={flight} selected={selected} handleClick={select} />
+        <Divider />
+      </div>
     ))}
-    <Divider />
   </List>
 );
 
