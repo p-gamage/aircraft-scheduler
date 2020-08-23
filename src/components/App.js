@@ -24,8 +24,11 @@ function App() {
 
   useEffect(() => {
     setAircrafts(getAircrafts());
-    setFlights(getFlights());
   }, []);
+
+  useEffect(() => {
+    selectedAircraft && setFlights(getFlights());
+  }, [selectedAircraft]);
 
   useEffect(() => {
     const createRotation = () =>
