@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {
   ListItem,
   ListItemText,
-  makeStyles,
   Typography,
   Box,
   ListItemIcon,
@@ -12,15 +11,7 @@ import {
 import FlightTakeoffOutlinedIcon from "@material-ui/icons/FlightTakeoffOutlined";
 import FlightLandOutlinedIcon from "@material-ui/icons/FlightLandOutlined";
 
-// const useStyles = makeStyles((theme) => ({
-//   listItem: {
-//     textAlign: "center",
-//   },
-// }));
-
 const Flight = ({ flight, selected, handleClick, disabled }) => {
-  // const classes = useStyles();
-
   return (
     <Paper variant="outlined" style={{ marginBottom: "1rem" }}>
       <ListItem

@@ -1,12 +1,12 @@
-// FIXME - refactor to re-usable component
 import React from "react";
 import PropTypes from "prop-types";
-import { List, Typography } from "@material-ui/core";
+import { List } from "@material-ui/core";
 import Aircraft from "./Aircraft";
+import Title from "../common/Title";
 
 const Aircrafts = ({ aircrafts, select, selected }) => (
   <>
-    <Typography variant="h5" align="center" children="Aircrafts" />
+    <Title text="Aircrafts" />
     <List>
       {aircrafts.map((aircraft) => (
         <Aircraft

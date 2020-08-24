@@ -1,28 +1,27 @@
-// FIXME - refactor to re-usable component
 import React from "react";
 import PropTypes from "prop-types";
-import { List, Typography } from "@material-ui/core";
+import { List } from "@material-ui/core";
 import Flight from "./Flight";
+import Title from "../common/Title";
+import InfoAlert from "../common/InfoAlert";
 
-const Flights = ({ flights, select, selected, rotation, selectedAircraft }) => (
+const Flights = ({ flights, select, selectedFlights }) => (
   <>
-    <Typography variant="h5" align="center">
-      {rotation ? `Rotation ${selectedAircraft}` : "Flights"}
-    </Typography>
+    <Title text="Flights" />
+    {flights.length === 0 && selectedFlights.length === 0 && (
+      <InfoAlert titleText="Loading flights..." body="Please be patient" />
+    )}
     <List>
-      {flights.map((flight) => (
-        <Flight
-          key={flight.ident}
-          flight={flight}
-          selected={rotation && selected.includes(flight)}
-          handleClick={select}
-          disabled={
-            rotation &&
-            selected.length > 0 &&
-            selected[selected.length - 1].ident !== flight.ident
-          }
+      {flights.length === 0 && selectedFlights.length > 0 ? (
+        <InfoAlert
+          titleText="No more flights left"
+          body="Edit rotation or refresh the page to start again"
         />
-      ))}
+      ) : (
+        flights.map((flight) => (
+          <Flight key={flight.ident} flight={flight} handleClick={select} />
+        ))
+      )}
     </List>
   </>
 );
@@ -32,7 +31,4 @@ export default Flights;
 Flights.propTypes = {
   flights: PropTypes.array.isRequired,
   select: PropTypes.func.isRequired,
-  selected: PropTypes.array.isRequired,
-  rotation: PropTypes.bool,
-  selectedAircraft: PropTypes.string,
 };

@@ -3,10 +3,11 @@ import "./App.css";
 import { getFlights, getAircrafts } from "../api";
 import Aircrafts from "./Aircrafts";
 import Flights from "./Flights";
+import Rotation from "./Rotation";
 import { Grid, Divider } from "@material-ui/core";
 import sortFlightsByTime from "../lib/sortFlightsByTime";
 import updateFlights from "../lib/updateFlights";
-import { Alert, AlertTitle } from "@material-ui/lab";
+import InfoAlert from "./common/InfoAlert";
 
 function App() {
   const [aircrafts, setAircrafts] = useState([]);
@@ -82,10 +83,10 @@ function App() {
   const selectFlightMessage = (
     <Grid container justify="center" spacing={3} alignContent="center">
       <Grid item xs={6}>
-        <Alert severity="info">
-          <AlertTitle style={{ textAlign: "left" }}>Select aircraft</AlertTitle>
-          Please select the aircraft from the left to see the flights
-        </Alert>
+        <InfoAlert
+          titleText="Select aircraft"
+          body="Please select the aircraft from the left to see the flights"
+        />
       </Grid>
     </Grid>
   );
@@ -93,11 +94,10 @@ function App() {
   const rotationAndFlights = (
     <>
       <Grid item xs={6}>
-        <Flights
+        <Rotation
           flights={selectedFlights}
           select={selectFlight}
           selected={selectedFlights}
-          rotation
           selectedAircraft={selectedAircraft}
         />
       </Grid>
@@ -106,7 +106,7 @@ function App() {
         <Flights
           flights={flights}
           select={selectFlight}
-          selected={selectedFlights}
+          selectedFlights={selectedFlights}
         />
       </Grid>
     </>
