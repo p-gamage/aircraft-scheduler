@@ -11,7 +11,7 @@ const Flights = ({ flights, select, selectedFlights }) => (
     {flights.length === 0 && selectedFlights.length === 0 && (
       <InfoAlert titleText="Loading flights..." body="Please be patient" />
     )}
-    <List>
+    <List style={{ maxHeight: "90vh", overflow: "auto" }}>
       {flights.length === 0 && selectedFlights.length > 0 ? (
         <InfoAlert
           titleText="No more flights left"
@@ -29,6 +29,6 @@ const Flights = ({ flights, select, selectedFlights }) => (
 export default Flights;
 
 Flights.propTypes = {
-  flights: PropTypes.array.isRequired,
+  flights: PropTypes.arrayOf(Object).isRequired,
   select: PropTypes.func.isRequired,
 };

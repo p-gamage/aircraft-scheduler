@@ -24,7 +24,7 @@ const Aircrafts = ({ aircrafts, select, selected, utilisation }) => (
 export default Aircrafts;
 
 Aircrafts.propTypes = {
-  aircrafts: PropTypes.array.isRequired,
+  aircrafts: PropTypes.arrayOf(Object).isRequired,
   select: PropTypes.func.isRequired,
   selected: PropTypes.string.isRequired,
   utilisation: PropTypes.number.isRequired,
