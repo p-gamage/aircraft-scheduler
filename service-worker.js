@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/aircraft-scheduler/precache-manifest.3c83a92d0b12277cd061df8f204212fd.js"
+  "/aircraft-scheduler/precache-manifest.8b415702e824a4d29588af359fec3d44.js"
 );
 
 self.addEventListener('message', (event) => {
