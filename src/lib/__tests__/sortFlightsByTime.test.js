@@ -11,16 +11,6 @@ const flight2 = {
 };
 
 test("orders by ascending departure time", () => {
-  const flight1 = {
-    arrivaltime: 1800,
-    departuretime: 3000,
-  };
-
-  const flight2 = {
-    arrivaltime: 1600,
-    departuretime: 2000,
-  };
-
   const flights = [flight1, flight2];
   const sortedFlights = sortFlightsByTime(flights);
 

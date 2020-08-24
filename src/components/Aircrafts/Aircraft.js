@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { ListItem, ListItemText, Paper } from "@material-ui/core";
 
-const Aircraft = ({ aircraft, selected, handleClick }) => (
+const Aircraft = ({ aircraft, selected, handleClick, utilisation }) => (
   <Paper variant="outlined">
     <ListItem
       button
@@ -10,7 +10,14 @@ const Aircraft = ({ aircraft, selected, handleClick }) => (
       onClick={() => handleClick(aircraft.ident)}
       divider
     >
-      <ListItemText primary={aircraft.ident} style={{ textAlign: "center" }} />
+      <ListItemText
+        primary={
+          utilisation > 0
+            ? `${aircraft.ident} (${Math.round(utilisation)}%)`
+            : aircraft.ident
+        }
+        style={{ textAlign: "center" }}
+      />
     </ListItem>
   </Paper>
 );
@@ -21,4 +28,5 @@ Aircraft.propTypes = {
   aircraft: PropTypes.object.isRequired,
   selected: PropTypes.string.isRequired,
   handleClick: PropTypes.func.isRequired,
+  utilisation: PropTypes.number.isRequired,
 };

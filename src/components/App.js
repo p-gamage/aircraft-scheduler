@@ -7,6 +7,7 @@ import Rotation from "./Rotation";
 import { Grid, Divider } from "@material-ui/core";
 import sortFlightsByTime from "../lib/sortFlightsByTime";
 import updateFlights from "../lib/updateFlights";
+import computeAircraftUtilisation from "../lib/computeAircraftUtilisation";
 import InfoAlert from "./common/InfoAlert";
 
 function App() {
@@ -15,8 +16,11 @@ function App() {
 
   const [selectedAircraft, setSelectedAircraft] = useState("");
   const [selectedFlights, setSelectedFlights] = useState([]);
+
   const [removedFlights, setRemovedFlights] = useState({});
   const [availableFlights, setAvailableFlights] = useState({});
+
+  const [utilisation, setUtilisation] = useState(0);
 
   const selectFlight = (flight) => {
     if (selectedFlights.includes(flight)) {
@@ -80,6 +84,11 @@ function App() {
     selectedAircraft && setFlights(sortedFlights);
   }, [selectedAircraft]);
 
+  useEffect(() => {
+    const utilisation = computeAircraftUtilisation(selectedFlights);
+    setUtilisation(utilisation);
+  }, [selectedFlights]);
+
   const selectFlightMessage = (
     <Grid container justify="center" spacing={3} alignContent="center">
       <Grid item xs={6}>
@@ -120,6 +129,7 @@ function App() {
             aircrafts={aircrafts}
             select={setSelectedAircraft}
             selected={selectedAircraft}
+            utilisation={utilisation}
           />
         </Grid>
         <Divider orientation="vertical" flexItem />

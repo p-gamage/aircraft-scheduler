@@ -4,7 +4,7 @@ import { List } from "@material-ui/core";
 import Aircraft from "./Aircraft";
 import Title from "../common/Title";
 
-const Aircrafts = ({ aircrafts, select, selected }) => (
+const Aircrafts = ({ aircrafts, select, selected, utilisation }) => (
   <>
     <Title text="Aircrafts" />
     <List>
@@ -14,6 +14,7 @@ const Aircrafts = ({ aircrafts, select, selected }) => (
           aircraft={aircraft}
           selected={selected}
           handleClick={select}
+          utilisation={utilisation}
         />
       ))}
     </List>
@@ -26,4 +27,5 @@ Aircrafts.propTypes = {
   aircrafts: PropTypes.array.isRequired,
   select: PropTypes.func.isRequired,
   selected: PropTypes.string.isRequired,
+  utilisation: PropTypes.number.isRequired,
 };
