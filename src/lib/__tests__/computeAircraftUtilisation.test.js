@@ -2,10 +2,11 @@ import computeAircraftUtilisation from "../computeAircraftUtilisation";
 import { turnaroundTimeInSeconds, secondsInDay } from "../constants";
 
 const SixAmInSeconds = 21600;
+const ThreePmInSeconds = 54000;
 const midnight = secondsInDay;
 
 const flight1 = {
-  arrivaltime: 54000,
+  arrivaltime: ThreePmInSeconds,
   departuretime: SixAmInSeconds,
 };
 
